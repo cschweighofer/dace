@@ -4776,7 +4776,7 @@ def _ndarray_any(pv: ProgramVisitor, sdfg: SDFG, state: SDFGState, arr: str, kwa
 def _make_datatype_converter(typeclass: str):
     if typeclass == "bool":
         dtype = dace.bool
-    elif typeclass in {"int", "float", "complex"}:
+    elif typeclass in {"int", "float", "complex", "double_as_single"}:
         dtype = dtypes.dtype_to_typeclass(eval(typeclass))
     else:
         dtype = dtypes.dtype_to_typeclass(eval("np.{}".format(typeclass)))

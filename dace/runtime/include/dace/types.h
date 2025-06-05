@@ -70,6 +70,7 @@
     #define DACE_CONSTEXPR_HOSTDEV const
 #endif
 
+#include "fp_types/double_as_single.h"
 
 namespace dace
 {
