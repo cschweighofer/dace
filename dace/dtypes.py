@@ -1251,7 +1251,7 @@ float32 = typeclass(numpy.float32)
 float64 = typeclass(numpy.float64)
 complex64 = typeclass(numpy.complex64)
 complex128 = typeclass(numpy.complex128)
-double_as_single = opaque('dace::double_as_single')
+simulated_double = opaque('dace::simulated_double')
 string = stringtype()
 MPI_Request = opaque('MPI_Request')
 
