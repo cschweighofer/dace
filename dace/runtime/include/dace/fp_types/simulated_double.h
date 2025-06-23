@@ -17,7 +17,7 @@ class simulated_double {
 
   DACE_HDFI void decompose(double val) {
     higher = static_cast<float>(val);
-    lower = static_cast<float>(val - higher);
+    lower = static_cast<float>(val - static_cast<double>(higher));
   }
 
  public:
@@ -25,6 +25,19 @@ class simulated_double {
 
   DACE_HDFI simulated_double(double v) {
     decompose(v);
+  }
+
+  DACE_HDFI simulated_double& operator=(const simulated_double& other) {
+    if (this != &other) {
+      higher = other.higher;
+      lower = other.lower;
+    }
+    return *this;
+  }
+
+  DACE_HDFI simulated_double(float v, float u) {
+    this->higher = v;
+    this->lower = u;
   }
 
   DACE_HDFI simulated_double(float v) : higher(v), lower(0.0f) {}
@@ -35,12 +48,6 @@ class simulated_double {
 
   DACE_HDFI simulated_double(const simulated_double& other)
       : higher(other.higher), lower(other.lower) {}
-
-  DACE_HDFI simulated_double& operator=(const simulated_double& other) {
-    higher = other.higher;
-    lower = other.lower;
-    return *this;
-  }
 
   DACE_HDFI simulated_double& operator=(double v) {
     decompose(v);
@@ -68,8 +75,11 @@ class simulated_double {
     } else {
       s = y - r + x + xx + yy;
     }
-    double z = static_cast<double>(r) + static_cast<double>(s);
-    return simulated_double(z);
+    float z = r + s;
+    float zz = (r - z) + s;
+
+    // return simulated_double(static_cast<double>(z) + static_cast<double>(zz));
+    return simulated_double(z, zz);
   }
 
   DACE_HDFI simulated_double operator-(const simulated_double& other) const {

@@ -1,6 +1,6 @@
 import dace
 import copy
-
+import numpy as np
 
 @dace.program
 def test_program(A: dace.float64[10, 10], B: dace.float64[10, 10], C: dace.float64[10, 10]):
@@ -83,29 +83,64 @@ def use_self_defined_fptype(sdfg: dace.SDFG, src_fptype: dace.dtypes.typeclass, 
                     dst_arr_name=nontransient_arr_name,
                     dst_arr=nontransient_arr)
 
-use_self_defined_fptype(sdfg, dace.float64, dace.simulated_double)
-sdfg.save("test_sdfg_with_transients.sdfg")
+# use_self_defined_fptype(modified_sdfg, dace.float64, dace.simulated_double)
+# modified_sdfg.save("test_sdfg_with_transients.sdfg")
+
+def test_with_random_input(
+    original_sdfg: dace.SDFG,
+    shape=(10, 10),
+    num_executions=5
+):
+    modified_sdfg = copy.deepcopy(original_sdfg)
+    use_self_defined_fptype(modified_sdfg, dace.float64, dace.simulated_double)
+    modified_sdfg.save("test_sdfg_with_transients.sdfg")
+
+    errors = []
+
+    for _ in range(num_executions):
+        A = dace.ndarray(shape, dtype=dace.float64)
+        B = dace.ndarray(shape, dtype=dace.float64)
+        # A[:] = np.random.rand(*shape) 
+        # B[:] = np.random.rand(*shape)
+        A[:] = np.random.uniform(1.0, 3.0, size=shape)  #TODO: Allow for different distributions
+        B[:] = np.random.uniform(1.0, 3.0, size=shape)
+
+        C_orig = dace.ndarray(shape, dtype=dace.float64)
+        C_orig[:] = 0
+        original_sdfg(A=A, B=B, C=C_orig)
+
+        C_mod = dace.ndarray(shape, dtype=dace.float64)
+        C_mod[:] = 0
+        modified_sdfg(_A=A, _B=B, _C=C_mod)
+
+        diff = np.abs(C_orig - C_mod)
+        errors.append(np.amax(diff))
+
+    # print("Mean absolute differences per execution:", errors)
+    # print("Overall mean difference:", np.mean(errors))
+    print("Overall max difference", np.amax(errors))
 
 if __name__ == "__main__":
-    A = dace.ndarray([10, 10], dtype=dace.float64)
-    B = dace.ndarray([10, 10], dtype=dace.float64)
-    C = dace.ndarray([10, 10], dtype=dace.float64)
-    A[:] = 1.0
-    B[:] = 2.0
-    C[:] = 0.0
+    # A = dace.ndarray([10, 10], dtype=dace.float64)
+    # B = dace.ndarray([10, 10], dtype=dace.float64)
+    # C = dace.ndarray([10, 10], dtype=dace.float64)
+    # A[:] = 1.0
+    # B[:] = 2.0
+    # C[:] = 0.0
 
-    test_program(A=A, B=B, C=C)
-    print("Result C:")
-    print(C)
+    # test_program(A=A, B=B, C=C)
+    # print("Original Result C:")
+    # print(C)
 
-    A = dace.ndarray([10, 10], dtype=dace.float64)
-    B = dace.ndarray([10, 10], dtype=dace.float64)
-    C = dace.ndarray([10, 10], dtype=dace.float64)
-    A[:] = 1.0
-    B[:] = 2.0
-    C[:] = 0.0
+    # A = dace.ndarray([10, 10], dtype=dace.float64)
+    # B = dace.ndarray([10, 10], dtype=dace.float64)
+    # C = dace.ndarray([10, 10], dtype=dace.float64)
+    # A[:] = 1.0
+    # B[:] = 2.0
+    # C[:] = 0.0
 
-    sdfg(_A=A, _B=B, _C=C) # Non-transient arrays are program inputs, mind the _ prefix
+    # modified_sdfg(_A=A, _B=B, _C=C) # Non-transient arrays are program inputs, mind the _ prefix
 
-    print("Result C:")
-    print(C)
+    # print("Modified Result C:")
+    # print(C)
+    test_with_random_input(sdfg)
