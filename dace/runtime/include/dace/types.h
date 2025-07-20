@@ -6,6 +6,7 @@
 #include <complex>
 #include "definitions.h"
 #include "fp_types/simulated_double.h"
+#include "fp_types/rational.h"
 
 // GPU support
 #ifdef __CUDACC__
