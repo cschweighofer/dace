@@ -8,14 +8,16 @@
 namespace dace {
 
 /**
+ * Compiling, but computations fail fast
  * A simple arbitrary-precision integer class using fixed-size array.
  * Uses multiple 32-bit integers to represent larger numbers.
  * Note: This is a basic implementation suitable for simple rational arithmetic.
  * For complex numerical algorithms, consider using established libraries like GMP.
  */
 class BigInt {
+  friend class rational;
 private:
-  static const int MAX_DIGITS = 16;  // Increased to support up to 16 * 32 = 512 bits
+  static const int MAX_DIGITS = 8192;  // Increased to support up to 256 * 32 = 8192 bits
   static const uint32_t BASE = 1000000000U;  // 10^9
   uint32_t digits[MAX_DIGITS];  // digits[0] is least significant
   int size;  // number of used digits
@@ -114,7 +116,11 @@ public:
       uint64_t carry = 0;
       int max_size = size > other.size ? size : other.size;
       for (int i = 0; i < max_size || carry; i++) {
-        if (i >= MAX_DIGITS) break;  // prevent overflow
+        if (i >= MAX_DIGITS) {
+          // Overflow detected
+          // In a real application, you might throw an exception or set an error state
+          break;
+        }
         
         uint64_t sum = carry;
         if (i < size) sum += digits[i];
@@ -147,8 +153,11 @@ public:
     } else {
       // Same sign: subtract magnitudes
       if (abs_less_than(other)) {
-        BigInt result = other;
+        BigInt result = other - *this;
         result.negative = !negative;
+        return result;
+      } else {
+        BigInt result = *this;
         
         uint64_t borrow = 0;
         for (int i = 0; i < size; i++) {
@@ -157,21 +166,6 @@ public:
             borrow = 0;
           } else {
             result.digits[i] = result.digits[i] + BASE - digits[i] - borrow;
-            borrow = 1;
-          }
-        }
-        result.remove_leading_zeros();
-        return result;
-      } else {
-        BigInt result = *this;
-        
-        uint64_t borrow = 0;
-        for (int i = 0; i < other.size; i++) {
-          if (result.digits[i] >= other.digits[i] + borrow) {
-            result.digits[i] -= other.digits[i] + borrow;
-            borrow = 0;
-          } else {
-            result.digits[i] = result.digits[i] + BASE - other.digits[i] - borrow;
             borrow = 1;
           }
         }
@@ -198,6 +192,9 @@ public:
       }
       if ((i + other.size) < MAX_DIGITS && carry) {
         result.digits[i + other.size] += carry;
+      } else if ((i + other.size) >= MAX_DIGITS && carry) {
+        // Overflow detected
+        break;
       }
     }
     
@@ -214,29 +211,41 @@ public:
     return result;
   }
   
+  DACE_HDFI bool is_negative() const { return negative; }
+
+  DACE_HDFI void get_approx(long double& mantissa, int& power_of_base) const {
+      if (is_zero()) {
+          mantissa = 0.0;
+          power_of_base = 0;
+          return;
+      }
+      
+      int digits_for_mantissa = 2;
+      if (digits_for_mantissa > size)
+          digits_for_mantissa = size;
+
+      mantissa = 0.0;
+      for (int i = 0; i < digits_for_mantissa; ++i) {
+          mantissa = mantissa * BASE + digits[size - 1 - i];
+      }
+      power_of_base = size - digits_for_mantissa;
+  }
+  
   DACE_HDFI double to_double() const {
     if (is_zero()) return 0.0;
     
-    double result = 0.0;
-    double base_power = 1.0;
+    long double result = 0.0;
+    long double base_power = 1.0;
     
-    // Calculate numerator value
     for (int i = 0; i < size; i++) {
       result += digits[i] * base_power;
       base_power *= BASE;
-      // Prevent infinite values for very large numbers
-      if (base_power > 1e100) break;
+      if (result > 1.79769e+308) { // DBL_MAX
+        return negative ? -INFINITY : INFINITY;
+      }
     }
     
-    double final_result = negative ? -result : result;
-    
-    // For very small results, ensure we don't return exactly zero unless it really is zero
-    if (final_result == 0.0 && !is_zero()) {
-      // Return a very small value instead of zero
-      return negative ? -1e-100 : 1e-100;
-    }
-    
-    return final_result;
+    return negative ? -static_cast<double>(result) : static_cast<double>(result);
   }
 };
 
@@ -312,7 +321,7 @@ class rational {
     
     // Use conservative scale to balance precision vs overflow risk
     // Even with larger BigInt arrays, we need to be careful about multiplication overflow
-    const long long scale = 10000LL;  // 10^4 - much more conservative
+    const long long scale = 10000000000000000LL;  // 10^16
     numerator = BigInt(static_cast<long long>(value * scale));
     denominator = BigInt(scale);
     if (negative) numerator = BigInt(0) - numerator;
@@ -346,7 +355,34 @@ class rational {
 
   // Conversion to double
   DACE_HDFI operator double() const {
-    return numerator.to_double() / denominator.to_double();
+    if (denominator.is_zero()) {
+        return NAN;
+    }
+    if (numerator.is_zero()) {
+        return 0.0;
+    }
+
+    long double num_m, den_m;
+    int num_e, den_e;
+    numerator.get_approx(num_m, num_e);
+    denominator.get_approx(den_m, den_e);
+
+    if (den_m == 0.0) {
+        return NAN;
+    }
+
+    long double result = num_m / den_m;
+    int exp_diff = num_e - den_e;
+
+    if (exp_diff != 0) {
+        result *= powl(BigInt::BASE, exp_diff);
+    }
+    
+    if (numerator.is_negative() != denominator.is_negative()) {
+        result = -result;
+    }
+    
+    return static_cast<double>(result);
   }
 
   // Conversion to float
