@@ -7,6 +7,8 @@
 #include "definitions.h"
 #include "fp_types/simulated_double.h"
 #include "fp_types/rational.h"
+#include "fp_types/mpq_class.h"
+#include "fp_types/mpf_class.h"
 
 // GPU support
 #ifdef __CUDACC__

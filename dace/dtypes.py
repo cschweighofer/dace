@@ -633,6 +633,24 @@ class opaque(typeclass):
         self.ctype_unaligned = typename
         self.dtype = self
 
+    def to_string(self):
+        """ A string representation of the opaque type. """
+        return self.ctype
+
+    @property
+    def bytes(self):
+        """ Return the size in bytes for this opaque type. """
+        # For opaque types, we need to provide a reasonable default size
+        # This is used for type operations and memory allocation
+        if self.ctype == 'dace::rational':
+            return 16  # Estimate for rational type
+        elif self.ctype == 'dace::mpq_class':
+            return 32  # Estimate for MPQ type (larger due to arbitrary precision)
+        elif self.ctype == 'dace::mpf_class':
+            return 64  # Estimate for MPF type (arbitrary precision floating-point)
+        else:
+            return 8  # Default size for other opaque types
+
     def to_json(self):
         return {'type': 'opaque', 'ctype': self.ctype}
 
@@ -654,7 +672,16 @@ class opaque(typeclass):
         return self
 
     def as_numpy_dtype(self):
-        raise NotImplementedError("Not sure how to make a numpy type from an opaque C type.")
+        # For opaque types, we need to provide a reasonable numpy equivalent
+        # This is used for argument validation and type checking
+        if self.ctype == 'dace::rational':
+            return numpy.float64  # Use float64 as a reasonable approximation
+        elif self.ctype == 'dace::mpq_class':
+            return numpy.float64  # Use float64 as a reasonable approximation
+        elif self.ctype == 'dace::mpf_class':
+            return numpy.float64  # Use float64 as a reasonable approximation for MPF
+        else:
+            return numpy.object_  # Default to object type for other opaque types
 
 
 class pointer(typeclass):
@@ -1252,6 +1279,9 @@ float64 = typeclass(numpy.float64)
 complex64 = typeclass(numpy.complex64)
 complex128 = typeclass(numpy.complex128)
 simulated_double = opaque('dace::simulated_double')
+rational = opaque('dace::rational')
+mpq = opaque('dace::mpq_class')
+mpf = opaque('dace::mpf_class')
 string = stringtype()
 MPI_Request = opaque('MPI_Request')
 
@@ -1274,6 +1304,9 @@ class Typeclasses(aenum.AutoNumberEnum):
     float64 = float64
     complex64 = complex64
     complex128 = complex128
+    rational = rational
+    mpq = mpq
+    mpf = mpf
 
 
 _bool = bool
@@ -1329,7 +1362,10 @@ TYPECLASS_TO_STRING = {
     float32: "dace::float32",
     float64: "dace::float64",
     complex64: "dace::complex64",
-    complex128: "dace::complex128"
+    complex128: "dace::complex128",
+    rational: "dace::rational",
+    mpq: "dace::mpq_class",
+    mpf: "dace::mpf_class"
 }
 
 TYPECLASS_STRINGS = [
