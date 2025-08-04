@@ -45,48 +45,34 @@ def run_paper():
     sdfg(TSTEPS=TSTEPS, N=N, A=A, B=B)
 
 
+def _enforce_conn_types(state: dace.SDFGState, node: dace.nodes.NestedSDFG | dace.nodes.Tasklet, dtype):
+    for in_conn in node.in_connectors:
+        for ie in state.in_edges_by_connector(node, in_conn):
+            if state.sdfg.arrays[ie.data.data].dtype ==  dtype and node.in_connectors[in_conn] != dtype:
+                node.in_connectors[in_conn] = dtype
+    for out_conn in node.out_connectors:
+        for oe in state.out_edges_by_connector(node, out_conn):
+            if state.sdfg.arrays[oe.data.data].dtype ==  dtype and node.out_connectors[out_conn] != dtype:
+                node.out_connectors[out_conn] = dtype
+
+def fix_connector_types(sdfg: dace.SDFG, dtype):
+    for state in sdfg.all_states():
+        for node in state.nodes():
+            if isinstance(node, dace.nodes.NestedSDFG):
+                # Recursively fix connector types in nested SDFGs
+                _enforce_conn_types(state, node, dtype)
+                fix_connector_types(node.sdfg, dtype)
+            elif isinstance(node, dace.nodes.Tasklet):
+                _enforce_conn_types(state, node, dtype)
+
+
 def change_fptype(sdfg: dace.SDFG, src_fptype: dace.dtypes.typeclass, dace_internal_fptype: dace.dtypes.typeclass):
-
-    def sdfg_types_to_mpf(sdfg, src_fptype, mpf_fptype):
-        """
-        Recursively transform all float64/double types in the SDFG to dace.mpf, including arrays, scalars, memlets, and connectors. This leverages DaCe's type system for correct C++ code generation.
-        """
-        # Transform array and scalar types
-        for _, arr in sdfg.arrays.items():
-            if arr.dtype == src_fptype:
-                arr.dtype = mpf_fptype
-
-        # Transform connectors and tasklet input/output types
-        for state in sdfg.nodes():
-            if hasattr(state, 'nodes'):
-                for node in state.nodes():
-                    if hasattr(node, 'inputs') and isinstance(node.inputs, dict):
-                        for k, v in node.inputs.items():
-                            if v == src_fptype:
-                                node.inputs[k] = mpf_fptype
-                    if hasattr(node, 'outputs') and isinstance(node.outputs, dict):
-                        for k, v in node.outputs.items():
-                            if v == src_fptype:
-                                node.outputs[k] = mpf_fptype
-                    if hasattr(node, 'local_variables') and isinstance(node.local_variables, dict):
-                        for k, v in node.local_variables.items():
-                            if v == src_fptype:
-                                node.local_variables[k] = mpf_fptype
-
-        # Transform memlets
-        for state in sdfg.nodes():
-            if hasattr(state, 'edges'):
-                for edge in state.edges():
-                    memlet = getattr(edge, 'data', None)
-                    if memlet is not None and hasattr(memlet, 'dtype') and memlet.dtype == src_fptype:
-                        memlet.dtype = mpf_fptype
-
-    sdfg_types_to_mpf(sdfg, src_fptype, dace_internal_fptype)
-
     # Add simulated double transient arrays to the SDFG
     arrays_that_become_transient = set()
     for arr_name, arr in sdfg.arrays.items():
-        if arr.dtype == dace_internal_fptype:
+        # print("Name: ", arr_name, "Type: ", arr.dtype, "Transient: ", arr.transient)
+        if arr.dtype == src_fptype:
+            arr.dtype = dace_internal_fptype
             if not arr.transient:
                 arr.transient = True
                 arrays_that_become_transient.add((arr_name, arr))
@@ -129,19 +115,19 @@ def change_fptype(sdfg: dace.SDFG, src_fptype: dace.dtypes.typeclass, dace_inter
         map_exit.add_in_connector(f"IN_{dst_arr_name}")
         map_exit.add_out_connector(f"OUT_{dst_arr_name}")
 
-        # Add a tasklet that performs the type cast (no C-style cast)
-        tasklet_code = "out = in;" if dst_arr.dtype == dace_internal_fptype else f"out = in;"
+        # Add a tasklet that perfmorms the type cast
         tasklet = state.add_tasklet(
             name=f"copy_{src_arr_name}_to_{dst_arr_name}",
             inputs={"in"},
             outputs={"out"},
-            code=tasklet_code,
+            code=f"out = static_cast<{dst_arr.dtype.ctype}>(in);",
             language=dace.Language.CPP)
 
         access_str = f", ".join([str(s) for s in map_ranges.keys()])
         state.add_edge(map_entry, f"OUT_{src_arr_name}", tasklet, "in", dace.Memlet(expr=f"{src_arr_name}[{access_str}]"))
         state.add_edge(tasklet, "out", map_exit, f"IN_{dst_arr_name}", dace.Memlet(expr=f"{dst_arr_name}[{access_str}]"))
 
+    fix_connector_types(sdfg, dace.mpf)
 
     for (transient_arr_name, transient_arr), (nontransient_arr_name, nontransient_arr) in src_dst_paris:
         add_copy_map(state=copy_in_state,
@@ -153,7 +139,8 @@ def change_fptype(sdfg: dace.SDFG, src_fptype: dace.dtypes.typeclass, dace_inter
                     src_arr_name=transient_arr_name,
                     src_arr=transient_arr,
                     dst_arr_name=nontransient_arr_name,
-                    dst_arr=nontransient_arr)
+                    dst_arr=nontransient_arr)    
+
 
 
 def compare_to_high_precision():
@@ -171,6 +158,7 @@ def compare_to_high_precision():
     # Run the high precision SDFG
     A2, B2 = np.copy(A_initial), np.copy(B_initial)
     sdfg_copy(TSTEPS=TSTEPS, N=N, _A=A2, _B=B2)
+    sdfg_copy.save("heat_3d_high_precision.sdfg")
     print("Rational executed")
     # Compare results
     diff = max(np.max(np.abs(A2 - A_ref)), np.max(np.abs(B2 - B_ref)))
@@ -187,8 +175,8 @@ if __name__ == "__main__":
     # dace.config.Config.set('compiler', 'cpu', 'args', value=f'{old_cpu_args} -fsanitize=address -g')
     # old_linker_args = dace.config.Config.get('compiler', 'linker', 'args')
     # dace.config.Config.set('compiler', 'linker', 'args', value=f'{old_linker_args} -fsanitize=address')
-    # import shutil
-    # shutil.rmtree('.dacecache', ignore_errors=True)
+    import shutil
+    shutil.rmtree('.dacecache', ignore_errors=True)
     compare_to_high_precision()
 
 #     Original executed
