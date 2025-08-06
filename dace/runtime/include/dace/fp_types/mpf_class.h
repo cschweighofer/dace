@@ -17,78 +17,105 @@ namespace dace {
 class mpf_class {
 private:
   mpf_t value;
+  bool initialized;
   
   // Default precision in bits (can be adjusted)
   static constexpr mp_bitcnt_t DEFAULT_PRECISION = 256;
 
 public:
   // Default constructor: 0.0
-  DACE_HDFI mpf_class() {
+  DACE_HDFI mpf_class() : initialized(false) {
     mpf_init2(value, DEFAULT_PRECISION);
     mpf_set_ui(value, 0);
+    initialized = true;
   }
 
   // Constructor with custom precision
-  DACE_HDFI mpf_class(mp_bitcnt_t precision) {
+  DACE_HDFI mpf_class(mp_bitcnt_t precision) : initialized(false) {
     mpf_init2(value, precision);
     mpf_set_ui(value, 0);
+    initialized = true;
   }
 
   // Constructor from long long
-  DACE_HDFI mpf_class(long long value) {
+  DACE_HDFI mpf_class(long long value) : initialized(false) {
     mpf_init2(this->value, DEFAULT_PRECISION);
     mpf_set_si(this->value, value);
+    initialized = true;
   }
 
   // Constructor from integer
-  DACE_HDFI mpf_class(int value) {
+  DACE_HDFI mpf_class(int value) : initialized(false) {
     mpf_init2(this->value, DEFAULT_PRECISION);
     mpf_set_si(this->value, value);
+    initialized = true;
   }
 
   // Constructor from double
-  DACE_HDFI mpf_class(double value) {
+  DACE_HDFI mpf_class(double value) : initialized(false) {
     mpf_init2(this->value, DEFAULT_PRECISION);
     if (std::isnan(value) || std::isinf(value)) {
       mpf_set_ui(this->value, 0);
-      return;
+    } else {
+      mpf_set_d(this->value, value);
     }
-    mpf_set_d(this->value, value);
+    initialized = true;
   }
 
   // Constructor from string (for high precision initialization)
-  DACE_HDFI mpf_class(const char* str) {
+  DACE_HDFI mpf_class(const char* str) : initialized(false) {
     mpf_init2(value, DEFAULT_PRECISION);
     mpf_set_str(value, str, 10);
+    initialized = true;
   }
 
   // Copy constructor
-  DACE_HDFI mpf_class(const mpf_class& other) {
+  DACE_HDFI mpf_class(const mpf_class& other) : initialized(false) {
     mpf_init2(value, mpf_get_prec(other.value));
     mpf_set(value, other.value);
+    initialized = true;
   }
 
   // Destructor
   DACE_HDFI ~mpf_class() {
-    mpf_clear(value);
+    if (initialized) {
+      mpf_clear(value);
+      initialized = false;
+    }
   }
 
   // Assignment operator
   DACE_HDFI mpf_class& operator=(const mpf_class& other) {
     if (this != &other) {
+      if (!initialized) {
+        mpf_init2(value, mpf_get_prec(other.value));
+        initialized = true;
+      }
       mpf_set(value, other.value);
     }
     return *this;
   }
 
   // Assignment from double
-  DACE_HDFI mpf_class& operator=(double value) {
-    *this = mpf_class(value);
+  DACE_HDFI mpf_class& operator=(double val) {
+    if (!initialized) {
+      mpf_init2(value, DEFAULT_PRECISION);
+      initialized = true;
+    }
+    if (std::isnan(val) || std::isinf(val)) {
+      mpf_set_ui(value, 0);
+    } else {
+      mpf_set_d(value, val);
+    }
     return *this;
   }
 
   // Assignment from long long
   DACE_HDFI mpf_class& operator=(long long val) {
+    if (!initialized) {
+      mpf_init2(value, DEFAULT_PRECISION);
+      initialized = true;
+    }
     mpf_set_si(value, val);
     return *this;
   }
