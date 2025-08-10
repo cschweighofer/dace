@@ -1,0 +1,497 @@
+{
+  "adi.py": {
+    "category": "SUCCESS",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 322,
+    "stderr_length": 0,
+    "stderr_preview": "",
+    "stdout_preview": "Running S model (TSTEPS=5, N=100)\nRMS Difference U: 935.361551360916\nMax Difference: 1872.0\nRunning M model (TSTEPS=20, N=200)\nRMS Difference U: 6.9896576326269354e+25\nMax Difference: 2.72901906589710"
+  },
+  "arc_distance.py": {
+    "category": "SUCCESS",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 376,
+    "stderr_length": 0,
+    "stderr_preview": "",
+    "stdout_preview": "Running S model (N=100000)\nRMS Difference in results: 5.8213874809289e-17\nMax Difference in results: 2.220446049250313e-16\nRunning M model (N=1000000)\nRMS Difference in results: 5.843023901184158e-17\n"
+  },
+  "atax.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 437,
+    "stderr_length": 6514,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (M=4000, N=5000)\nWARNING: Shadowing variable _A from type (<DefinedType.Pointer: 1>, 'double*') to DefinedType.Scalar\nWARNING: Shadowing variable _x from type (<DefinedType.Pointer: 1>"
+  },
+  "azimint_hist.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 138,
+    "stderr_length": 7651,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/SPCL/npbench/runners copy/azimint_hist.py\", line 64, in <module>\n    run_all_models()\n  File \"/home/chris/SPCL/npbench/runners copy/azimint_hist.",
+    "stdout_preview": "Running S model (N=400000, NPT=1000)\nFailing SDFG saved for inspection in /home/chris/SPCL/npbench/runners copy/_dacegraphs/failing.sdfgz\n"
+  },
+  "azimint_naive.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 37,
+    "stderr_length": 6361,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/targets/cpu.py:482: UserWarning: Variable-length array mask_r12 with size N detected and was allocated on heap instead of StorageType.Re",
+    "stdout_preview": "Running S model (N=400000, NPT=1000)\n"
+  },
+  "bicg.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 235,
+    "stderr_length": 6675,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (M=4000, N=5000)\nWARNING: Shadowing variable _A from type (<DefinedType.Pointer: 1>, 'double*') to DefinedType.Scalar\nWARNING: Shadowing variable _A from type (<DefinedType.Pointer: 1>"
+  },
+  "cavity_flow.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 62,
+    "stderr_length": 17220,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"dt\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting scalar",
+    "stdout_preview": "Running S model (NY=61, NX=61, NT=25, NIT=5, RHO=1.0, NU=0.1)\n"
+  },
+  "channel_flow.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 62,
+    "stderr_length": 14267,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"dt\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting scalar",
+    "stdout_preview": "Running S model (NY=61, NX=61, NIT=5, RHO=1.0, NU=0.1, F=1.0)\n"
+  },
+  "cholesky.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 24,
+    "stderr_length": 4880,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (N=100)\n"
+  },
+  "cholesky2.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 25,
+    "stderr_length": 7386,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (N=1000)\n"
+  },
+  "compute.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 33,
+    "stderr_length": 2187,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"a\" from ndarray to <class 'numpy.int64'>\n  warnings.warn(f'Casting scalar ar",
+    "stdout_preview": "Running S model (M=2000, N=2000)\n"
+  },
+  "contour_integral.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 63,
+    "stderr_length": 2255,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/targets/cpu.py:482: UserWarning: Variable-length array _ainout with size (NR * NR) detected and was allocated on heap instead of Storage",
+    "stdout_preview": "Running S model (NR=50, NM=150, SLAB_PER_BC=2, NUM_INT_PTS=32)\n"
+  },
+  "conv2d.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 0,
+    "stderr_length": 602,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/SPCL/npbench/runners copy/conv2d.py\", line 25, in <module>\n    sdfg = dace.SDFG.from_file(\"/home/chris/SPCL/npbench/runners/sdfgs/conv2d_auto_opt",
+    "stdout_preview": ""
+  },
+  "correlation.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 31,
+    "stderr_length": 17481,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"float_n\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting s",
+    "stdout_preview": "Running S model (M=500, N=600)\n"
+  },
+  "covariance.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 31,
+    "stderr_length": 11374,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"float_n\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting s",
+    "stdout_preview": "Running S model (M=500, N=600)\n"
+  },
+  "covariance2.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 0,
+    "stderr_length": 622,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/SPCL/npbench/runners copy/covariance2.py\", line 21, in <module>\n    sdfg = dace.SDFG.from_file(\"/home/chris/SPCL/npbench/runners/sdfgs/covariance",
+    "stdout_preview": ""
+  },
+  "crc16.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 25,
+    "stderr_length": 1335,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py\", line 500, in _construct_args\n    arglist.append(kwargs[a])\n               ",
+    "stdout_preview": "Running S model (N=1600)\n"
+  },
+  "deriche.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 31,
+    "stderr_length": 1642,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"alpha\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting sca",
+    "stdout_preview": "Running S model (W=400, H=200)\n"
+  },
+  "doitgen.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 0,
+    "stderr_length": 606,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/SPCL/npbench/runners copy/doitgen.py\", line 23, in <module>\n    sdfg = dace.SDFG.from_file(\"/home/chris/SPCL/npbench/runners/sdfgs/doitgen_auto_o",
+    "stdout_preview": ""
+  },
+  "durbin.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 25,
+    "stderr_length": 5163,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (N=1000)\n"
+  },
+  "fdtd_2d.py": {
+    "category": "SUCCESS",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 464,
+    "stderr_length": 0,
+    "stderr_preview": "",
+    "stdout_preview": "Running S model (TMAX=20, NX=200, NY=220)\nRMS Difference EX: 2.0560621499944365e-14\nRMS Difference EY: 2.068998075519209e-14\nRMS Difference HZ: 2.5776654190113387e-14\nRMS Difference _FICT_: 0.0\nMax Di"
+  },
+  "floyd_warshall.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 24,
+    "stderr_length": 1362,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py\", line 500, in _construct_args\n    arglist.append(kwargs[a])\n               ",
+    "stdout_preview": "Running S model (N=200)\n"
+  },
+  "gemm.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 44,
+    "stderr_length": 6625,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"alpha\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting sca",
+    "stdout_preview": "Running S model (NI=1000, NJ=1100, NK=1200)\n"
+  },
+  "gemver.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 429,
+    "stderr_length": 10019,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"alpha\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting sca",
+    "stdout_preview": "Running S model (N=1000)\nWARNING: Shadowing variable _A from type (<DefinedType.Pointer: 1>, 'double*') to DefinedType.Scalar\nWARNING: Shadowing variable _x from type (<DefinedType.Pointer: 1>, 'doubl"
+  },
+  "gesummv.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 429,
+    "stderr_length": 8442,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"alpha\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting sca",
+    "stdout_preview": "Running S model (N=2000)\nWARNING: Shadowing variable _A from type (<DefinedType.Pointer: 1>, 'double*') to DefinedType.Scalar\nWARNING: Shadowing variable _x from type (<DefinedType.Pointer: 1>, 'doubl"
+  },
+  "go_fast.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 25,
+    "stderr_length": 1345,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py\", line 500, in _construct_args\n    arglist.append(kwargs[a])\n               ",
+    "stdout_preview": "Running S model (N=2000)\n"
+  },
+  "gramschmidt.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 29,
+    "stderr_length": 5584,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (M=70, N=60)\n"
+  },
+  "hdiff.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 35,
+    "stderr_length": 8367,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (I=64, J=64, K=60)\n"
+  },
+  "heat_3d.py": {
+    "category": "SUCCESS",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 252,
+    "stderr_length": 0,
+    "stderr_preview": "",
+    "stdout_preview": "Running S model (TSTEPS=25, N=25)\nRMS Difference A: 1.6951480234668016e-15\nRMS Difference B: 1.6951480234668016e-15\nMax Difference: 3.552713678800501e-15\nRunning M model (TSTEPS=50, N=40)\nRMS Differen"
+  },
+  "jacobi_1d.py": {
+    "category": "SUCCESS",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 315,
+    "stderr_length": 0,
+    "stderr_preview": "",
+    "stdout_preview": "Running S model (TSTEPS=800, N=3200)\nRMS Difference A: 2.1229658003151918e-16\nRMS Difference B: 2.1408361483176287e-16\nMax Difference: 8.881784197001252e-16\nRunning M model (TSTEPS=3000, N=12000)\nRMS "
+  },
+  "jacobi_2d.py": {
+    "category": "SUCCESS",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 307,
+    "stderr_length": 0,
+    "stderr_preview": "",
+    "stdout_preview": "Running S model (TSTEPS=50, N=150)\nRMS Difference A: 8.343349027600896e-14\nRMS Difference B: 8.299579140902856e-14\nMax Difference: 3.410605131648481e-13\nRunning M model (TSTEPS=80, N=350)\nRMS Differen"
+  },
+  "k2mm.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 49,
+    "stderr_length": 8497,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"alpha\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting sca",
+    "stdout_preview": "Running S model (NI=800, NJ=850, NK=900, NL=950)\n"
+  },
+  "k3mm.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 58,
+    "stderr_length": 9087,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (NI=800, NJ=850, NK=900, NL=950, NM=1000)\n"
+  },
+  "lenet.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 34,
+    "stderr_length": 1980,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/sdfg/validation.py:856: UserWarning: Dimensionality mismatch between src/dst subsets\n  warnings.warn(error.message)\n/home/chris/anaconda3/lib/py",
+    "stdout_preview": "Running S model (N=4, H=28, W=28)\n"
+  },
+  "lu.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 23,
+    "stderr_length": 5697,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (N=60)\n"
+  },
+  "ludcmp.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 23,
+    "stderr_length": 9951,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (N=60)\n"
+  },
+  "mandelbrot1.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 102,
+    "stderr_length": 6638,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (XMIN=-1.75, XMAX=0.25, XN=125, YMIN=-1.0, YMAX=1.0, YN=125, MAXITER=60, HORIZON=2.0)\n"
+  },
+  "mandelbrot2.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 0,
+    "stderr_length": 622,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/SPCL/npbench/runners copy/mandelbrot2.py\", line 16, in <module>\n    sdfg = dace.SDFG.from_file(\"/home/chris/SPCL/npbench/runners/sdfgs/mandelbrot",
+    "stdout_preview": ""
+  },
+  "mlp.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 58,
+    "stderr_length": 1414,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py\", line 500, in _construct_args\n    arglist.append(kwargs[a])\n               ",
+    "stdout_preview": "Running S model (C_IN=3, N=8, S0=30000, S1=2000, S2=2000)\n"
+  },
+  "mvt.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 227,
+    "stderr_length": 7479,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (N=5500)\nWARNING: Shadowing variable _A from type (<DefinedType.Pointer: 1>, 'double*') to DefinedType.Scalar\nWARNING: Shadowing variable _A from type (<DefinedType.Pointer: 1>, 'doubl"
+  },
+  "nbody.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 64,
+    "stderr_length": 1496,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/SPCL/npbench/runners copy/nbody.py\", line 80, in <module>\n    run_all_models()\n  File \"/home/chris/SPCL/npbench/runners copy/nbody.py\", line 77, ",
+    "stdout_preview": "Running S model (N=25, TEND=2.0, DT=0.05, SOFTENING=0.1, G=1.0)\n"
+  },
+  "nussinov.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 23,
+    "stderr_length": 1340,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py\", line 500, in _construct_args\n    arglist.append(kwargs[a])\n               ",
+    "stdout_preview": "Running S model (N=40)\n"
+  },
+  "real_lowering.py": {
+    "category": "NUMPY_ARRAY_ERROR",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 1570325,
+    "stderr_length": 0,
+    "stderr_preview": "",
+    "stdout_preview": "Generating test data...\nComputing reference results with GNU MP Rational...\n  Error: 'Missing program argument \"_C\"'\nDEBUG: Output 'A' value: [[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 0."
+  },
+  "resnet.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 47,
+    "stderr_length": 1411,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py\", line 500, in _construct_args\n    arglist.append(kwargs[a])\n               ",
+    "stdout_preview": "Running S model (N=8, W=14, H=14, C1=32, C2=8)\n"
+  },
+  "scattering_self_energies.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 70,
+    "stderr_length": 1495,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py\", line 500, in _construct_args\n    arglist.append(kwargs[a])\n               ",
+    "stdout_preview": "Running S model (NKZ=2, NE=4, NQZ=2, NW=2, N3D=2, NA=6, NB=2, NORB=3)\n"
+  },
+  "seidel_2d.py": {
+    "category": "SUCCESS",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 461,
+    "stderr_length": 0,
+    "stderr_preview": "",
+    "stdout_preview": "Running S model (TSTEPS=8, N=50)\nRMS Difference A: 2.3199647763260597e-15\nMax Difference: 1.4210854715202004e-14\nRunning M model (TSTEPS=15, N=100)\nRMS Difference A: 5.3820457367993104e-15\nMax Differe"
+  },
+  "softmax.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 37,
+    "stderr_length": 1341,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py\", line 500, in _construct_args\n    arglist.append(kwargs[a])\n               ",
+    "stdout_preview": "Running S model (N=16, H=16, SM=128)\n"
+  },
+  "spmv.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 43,
+    "stderr_length": 6116,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/targets/cpu.py:482: UserWarning: Variable-length array __tmp5 with size ((- __tmp3) + __tmp4) detected and was allocated on heap instead",
+    "stdout_preview": "Running S model (M=4096, N=4096, NNZ=8192)\n"
+  },
+  "stockham_fft.py": {
+    "category": "DACE_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 28,
+    "stderr_length": 14842,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/sdfg/validation.py:856: UserWarning: Dimensionality mismatch between src/dst subsets\n  warnings.warn(error.message)\n/home/chris/anaconda3/lib/py",
+    "stdout_preview": "Running S model (R=2, K=15)\n"
+  },
+  "symm.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 29,
+    "stderr_length": 6177,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"alpha\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting sca",
+    "stdout_preview": "Running S model (M=40, N=50)\n"
+  },
+  "syr2k.py": {
+    "category": "UNKNOWN_ERROR",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 409,
+    "stderr_length": 1076,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"alpha\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting sca",
+    "stdout_preview": "Running S model (M=35, N=50)\nRMS Difference ALPHA: 0.0\nRMS Difference BETA: 0.0\nRMS Difference C: 3.2968734469074996e-15\nRMS Difference A: 0.0\nRMS Difference B: 0.0\nMax Difference: 1.7763568394002505e"
+  },
+  "syrk.py": {
+    "category": "UNKNOWN_ERROR",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 365,
+    "stderr_length": 1076,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"alpha\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting sca",
+    "stdout_preview": "Running S model (M=50, N=70)\nRMS Difference ALPHA: 0.0\nRMS Difference BETA: 0.0\nRMS Difference C: 2.8026277447306363e-15\nRMS Difference A: 0.0\nMax Difference: 1.4210854715202004e-14\nRunning M model (M"
+  },
+  "trisolv.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 126,
+    "stderr_length": 5881,
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiler.py\", line 245, in configure_and_compile\n    _run_liveoutput(\"cmake --build . --confi",
+    "stdout_preview": "Running S model (N=2000)\nWARNING: Shadowing variable _x from type (<DefinedType.Pointer: 1>, 'double*') to DefinedType.Scalar\n"
+  },
+  "trmm.py": {
+    "category": "BLAS_LIBRARY_ERROR",
+    "success": false,
+    "returncode": 1,
+    "stdout_length": 29,
+    "stderr_length": 4780,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"alpha\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting sca",
+    "stdout_preview": "Running S model (M=65, N=80)\n"
+  },
+  "vadv.py": {
+    "category": "UNKNOWN_ERROR",
+    "success": true,
+    "returncode": 0,
+    "stdout_length": 520,
+    "stderr_length": 547,
+    "stderr_preview": "/home/chris/anaconda3/lib/python3.12/site-packages/dace/codegen/compiled_sdfg.py:573: UserWarning: Casting scalar argument \"dtr_stage\" from ndarray to <class 'numpy.float64'>\n  warnings.warn(f'Casting",
+    "stdout_preview": "Running S model (I=60, J=60, K=40)\nRMS Difference UTENS_STAGE: 4.3706398856922306e-14\nRMS Difference U_STAGE: 0.0\nRMS Difference WCON: 0.0\nRMS Difference U_POS: 0.0\nRMS Difference UTENS: 0.0\nRMS Diffe"
+  }
+}
