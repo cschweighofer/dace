@@ -107,8 +107,16 @@ include_directories(${DACE_RUNTIME_DIR}/include)
 find_package(Threads REQUIRED)
 find_package(OpenMP REQUIRED COMPONENTS CXX)
 
+# Find GMP library for MPF support
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GMP REQUIRED gmp)
+
+# Add GMP include directories
+include_directories(${GMP_INCLUDE_DIRS})
+
 list(APPEND DACE_LIBS Threads::Threads)
 list(APPEND DACE_LIBS OpenMP::OpenMP_CXX)
+list(APPEND DACE_LIBS ${GMP_LIBRARIES})
 
 add_definitions(-DDACE_BINARY_DIR=\"${CMAKE_BINARY_DIR}\")
 

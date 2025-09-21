@@ -889,6 +889,7 @@ class SDFG(ControlFlowRegion):
         if location not in self.init_code:
             self.init_code[location] = CodeBlock('', dtypes.Language.CPP)
         self.init_code[location].code += cpp_code
+        #TODO: sdfg.append_init_code(cpp_code="mpf_set_default_prec(2000);") 
 
     def append_exit_code(self, cpp_code: str, location: str = 'frame'):
         """

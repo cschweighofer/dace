@@ -642,9 +642,7 @@ class opaque(typeclass):
         """ Return the size in bytes for this opaque type. """
         # For opaque types, we need to provide a reasonable default size
         # This is used for type operations and memory allocation
-        if self.ctype == 'dace::rational':
-            return 16  # Estimate for rational type
-        elif self.ctype == 'dace::mpq_class':
+        if self.ctype == 'dace::mpq_class':
             return 32  # Estimate for MPQ type (larger due to arbitrary precision)
         elif self.ctype == 'dace::mpf_class':
             return 64  # Estimate for MPF type (arbitrary precision floating-point)
@@ -674,9 +672,7 @@ class opaque(typeclass):
     def as_numpy_dtype(self):
         # For opaque types, we need to provide a reasonable numpy equivalent
         # This is used for argument validation and type checking
-        if self.ctype == 'dace::rational':
-            return numpy.float64  # Use float64 as a reasonable approximation
-        elif self.ctype == 'dace::mpq_class':
+        if self.ctype == 'dace::mpq_class':
             return numpy.float64  # Use float64 as a reasonable approximation
         elif self.ctype == 'dace::mpf_class':
             return numpy.float64  # Use float64 as a reasonable approximation for MPF
@@ -1279,7 +1275,6 @@ float64 = typeclass(numpy.float64)
 complex64 = typeclass(numpy.complex64)
 complex128 = typeclass(numpy.complex128)
 simulated_double = opaque('dace::simulated_double')
-rational = opaque('dace::rational')
 mpq = opaque('dace::mpq_class')
 mpf = opaque('dace::mpf_class')
 string = stringtype()
@@ -1304,7 +1299,6 @@ class Typeclasses(aenum.AutoNumberEnum):
     float64 = float64
     complex64 = complex64
     complex128 = complex128
-    rational = rational
     mpq = mpq
     mpf = mpf
 
@@ -1363,7 +1357,6 @@ TYPECLASS_TO_STRING = {
     float64: "dace::float64",
     complex64: "dace::complex64",
     complex128: "dace::complex128",
-    rational: "dace::rational",
     mpq: "dace::mpq_class",
     mpf: "dace::mpf_class"
 }
